@@ -1,8 +1,8 @@
 {
     "name": "background-feature",
-    "displayName": "background-feature",
+    "displayName": "background feature",
     "description": "Please not use this,it's just for testing background's feature!Not for users.",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "publisher": "shalldie",
     "engines": {
         "vscode": "^1.17.0"
@@ -11,14 +11,17 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.sayHello"
+        "*",
+        "extension.sayHello"
     ],
     "main": "./out/extension",
     "contributes": {
-        "commands": [{
-            "command": "extension.sayHello",
-            "title": "Hello World"
-        }]
+        "commands": [
+            {
+                "command": "extension.sayHello",
+                "title": "Hello World"
+            }
+        ]
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",

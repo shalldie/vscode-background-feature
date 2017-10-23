@@ -21,7 +21,48 @@
                 "command": "extension.sayHello",
                 "title": "Hello World"
             }
-        ]
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "Plugin background-feature config. background 插件配置",
+            "properties": {
+                "background-feature.enabled": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Plugin background enabled.background 插件是否启用"
+                },
+                "background-feature.useFront": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "If use front image,which means image is placed on the top of your code. 是否使用前景图，这样会使图片放在代码的顶部"
+                },
+                "background-feature.style": {
+                    "type": "object",
+                    "default": {
+                        "content": "''",
+                        "pointer-events": "none",
+                        "position": "absolute",
+                        "z-index": "99999",
+                        "width": "100%",
+                        "height": "100%",
+                        "background-position": "100% 100%",
+                        "background-repeat": "no-repeat",
+                        "opacity": 1
+                    },
+                    "description": "Custom style.自定义样式."
+                },
+                "background-feature.useDefault": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Use default images.使用默认图片"
+                },
+                "background-feature.customImages": {
+                    "type": "array",
+                    "default": [],
+                    "description": "Your custom Images(Max length is 3). 自己定制背景图，最多3个"
+                }
+            }
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",

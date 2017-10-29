@@ -2,7 +2,7 @@
     "name": "background-feature",
     "displayName": "background feature",
     "description": "Please not use this,it's just for testing background's feature!Not for users.",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "publisher": "shalldie",
     "engines": {
         "vscode": "^1.17.0"

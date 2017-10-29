@@ -6,18 +6,18 @@ import * as vscode from 'vscode';
 import vsHelp from './vsHelp';
 import vscodePath from './vscodePath';
 import version from './version';
+import getCss from './getCss';
 
 /**
  * 文件类型
  * 
  * @enum {number}
  */
-enum fileType {
+enum FileType {
     /**
      * 未修改的css文件
      */
     empty,
-
     /**
      * hack 过的旧版本css文件
      */
@@ -28,15 +28,13 @@ enum fileType {
     isNew
 }
 
-export default class Background {
-
-    /**
-     * Creates an instance of Background.
-     * @memberof Background
-     */
-    constructor() {
-        this.initialize();
-    }
+/**
+ * 插件逻辑类
+ * 
+ * @export
+ * @class Background
+ */
+class Background {
 
     //#region private fields 私有字段
 
@@ -71,7 +69,7 @@ export default class Background {
      * @param {string} content 
      * @memberof Background
      */
-    private saveCssContent(content: string) {
+    private saveCssContent(content: string): void {
         fs.writeFileSync(vscodePath.cssPath, content, 'utf-8');
     }
 
@@ -83,11 +81,15 @@ export default class Background {
      * @memberof Background
      */
     private initialize(): void {
-        // 初始配置
 
-        // 是否初次安装
-        let firstload: boolean = this.checkFirstload();
+        let firstload = this.checkFirstload();  // 是否初次加载插件
 
+        let fileType = this.getFileType(); // css 文件目前状态
+
+        // 如果是第一次加载插件，或者旧版本
+        if (firstload || fileType == FileType.isOld) {
+            this.install(true);
+        }
 
     }
 
@@ -119,36 +121,46 @@ export default class Background {
      * 获取css文件状态
      * 
      * @private
-     * @returns {fileType} 
+     * @returns {FileType} 
      * @memberof Background
      */
-    private getFileType(): fileType {
+    private getFileType(): FileType {
         let cssContent = this.getCssContent();
 
         // 未 hack 过
         let ifUnInstall: boolean = !~cssContent.indexOf(`background.ver`);
 
         if (ifUnInstall) {
-            return fileType.empty;
+            return FileType.empty;
         }
 
         // hack 过的旧版本
-        let ifVerOld: boolean = !~cssContent.indexOf(`background.ver.${version}`);
+        let ifVerOld: boolean = !~cssContent.indexOf(`/*background.ver.${version}*/`);
 
         if (ifVerOld) {
-            return fileType.isOld;
+            fs.writeFileSync(path.join(__dirname, '../xxx.css'), cssContent, 'utf-8');
+            return FileType.isOld;
         }
 
         // hack 过的新版本
-        return fileType.isNew;
+        return FileType.isNew;
     }
 
-    private install(firstload: boolean) {
+    /**
+     * 安装插件，hack css
+     * 
+     * @private
+     * @param {boolean} [refresh] 需要更新
+     * @returns {void} 
+     * @memberof Background
+     */
+    private install(refresh?: boolean): void {
+
         let lastConfig = this.config;  // 之前的配置
         let config = vscode.workspace.getConfiguration('background'); // 当前用户配置
 
         // 1.如果配置文件改变到时候，当前插件配置没有改变，则返回
-        if (!firstload && JSON.stringify(lastConfig) == JSON.stringify(config)) {
+        if (!refresh && JSON.stringify(lastConfig) == JSON.stringify(config)) {
             // console.log('配置文件未改变.')
             return;
         }
@@ -157,11 +169,37 @@ export default class Background {
 
         // 2.两次配置均为，未启动插件
         if (!lastConfig.enabled && !config.enabled) {
+            // console.log('两次配置均为，未启动插件');
             return;
         }
 
+        // 3.保存当前配置
         this.config = config; // 更新配置
 
+        // 4.如果关闭插件
+        if (!config.enabled) {
+            this.uninstall();
+            vsHelp.showInfoRestart('Background has been uninstalled! Please restart.');
+            return;
+        }
+
+        // 5.hack 样式
+        let arr = []; // 默认图片
+
+        if (!config.useDefault) { // 自定义图片
+            arr = config.customImages;
+        }
+
+        // 自定义的样式内容
+        let content = getCss(arr, config.style, config.useFront).replace(/\s*$/, ''); // 去除末尾空白
+
+        // 添加到原有样式(尝试删除旧样式)中
+        let cssContent = this.getCssContent();
+        cssContent = this.clearCssContent(cssContent);
+        cssContent += content;
+
+        this.saveCssContent(cssContent);
+        vsHelp.showInfoRestart('Background has been changed! Please restart.');
 
     }
 
@@ -179,6 +217,7 @@ export default class Background {
             return true;
         }
         catch (ex) {
+            console.log(ex);
             return false;
         }
     }
@@ -198,4 +237,21 @@ export default class Background {
     }
 
     //#endregion
+
+    //#region public methods
+
+    /**
+     * 初始化，并开始监听配置文件改变
+     * 
+     * @returns {vscode.Disposable} 
+     * @memberof Background
+     */
+    public watch(): vscode.Disposable {
+        this.initialize();
+        return vscode.workspace.onDidChangeConfiguration(() => this.install());
+    }
+
+    //#endregion
 }
+
+export default new Background();

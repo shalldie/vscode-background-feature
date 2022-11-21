@@ -1,30 +1,34 @@
 <!-- 中英文切换 -->
 <div align="right">
-
-[English](./README.md) | [中文](./README.zh-CN.md)
-
+<a href="./README.md">English</a> | <a href="./README.zh-CN.md">中文</a>
 </div>
 <!-- 中英文切换 end -->
 
 <!-- 封面区域 -->
 <div align="center">
 
-![logo](images/logo.png)
+<h1>
 
-<h1><b>vscode-background</b></h1>
+<img src="images/logo.png" alt="logo" width="125">
 
-### Bring background images to your [Visual Studio Code](https://code.visualstudio.com)
+<b>vscode-background</b>
 
-`code area`、`fullscreen`、`carousel`、`custom images`...
+</h1>
 
-[GitHub](https://github.com/shalldie/vscode-background) | [Vscode Market](https://marketplace.visualstudio.com/items?itemName=shalldie.background)
+<h3>
+Bring background images to your  <a href="https://code.visualstudio.com" target="_blank">Visual Studio Code</a>.
+</h3>
 
-[![Version](https://img.shields.io/visual-studio-marketplace/v/shalldie.background?logo=visualstudiocode&style=flat-square)](https://marketplace.visualstudio.com/items?itemName=shalldie.background)
-[![Installs](https://img.shields.io/visual-studio-marketplace/i/shalldie.background?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=shalldie.background)
-[![Ratings](https://img.shields.io/visual-studio-marketplace/r/shalldie.background?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=shalldie.background)
-[![Stars](https://img.shields.io/github/stars/shalldie/vscode-background?logo=github&style=flat-square)](https://github.com/shalldie/vscode-background)
-[![Build Status](https://img.shields.io/github/workflow/status/shalldie/vscode-background/ci?label=build&logo=github&style=flat-square)](https://github.com/shalldie/vscode-background/actions)
-[![License](https://img.shields.io/github/license/shalldie/vscode-background?style=flat-square)](https://github.com/shalldie/vscode-background)
+<code>code area、fullscreen、carousel、custom images...</code>
+
+<a href="https://github.com/shalldie/vscode-background" target="_blank">GitHub</a> | <a href="https://marketplace.visualstudio.com/items?itemName=shalldie.background" target="_blank">Visual Studio Marketplace</a>
+
+<a href="https://marketplace.visualstudio.com/items?itemName=shalldie.background"><img src="https://img.shields.io/visual-studio-marketplace/v/shalldie.background?logo=visualstudiocode&style=flat-square" alt="Version"></a>
+<a href="https://marketplace.visualstudio.com/items?itemName=shalldie.background"><img src="https://img.shields.io/visual-studio-marketplace/i/shalldie.background?style=flat-square" alt="Installs"></a>
+<a href="https://marketplace.visualstudio.com/items?itemName=shalldie.background"><img src="https://img.shields.io/visual-studio-marketplace/r/shalldie.background?style=flat-square" alt="Ratings"></a>
+<a href="https://github.com/shalldie/vscode-background"><img src="https://img.shields.io/github/stars/shalldie/vscode-background?logo=github&style=flat-square" alt="Stars"></a>
+<a href="https://github.com/shalldie/vscode-background/actions"><img src="https://img.shields.io/github/workflow/status/shalldie/vscode-background/ci?label=build&style=flat-square" alt="Build Status"></a>
+<a href="https://github.com/shalldie/vscode-background"><img src="https://img.shields.io/github/license/shalldie/vscode-background?style=flat-square" alt="License"></a>
 
 </div>
 

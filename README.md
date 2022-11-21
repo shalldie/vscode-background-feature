@@ -15,9 +15,9 @@
 
 </h1>
 
-<h2>
+<h3>
 Bring background images to your  <a href="https://code.visualstudio.com" target="_blank">Visual Studio Code</a>.
-</h2>
+</h3>
 
 <code>code area、fullscreen、carousel、custom images...</code>
 

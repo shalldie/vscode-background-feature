@@ -26,11 +26,11 @@
 [![Build Status](https://img.shields.io/github/actions/workflow/status/shalldie/vscode-background/ci.yml?branch=master&label=build&style=flat-square)](https://github.com/shalldie/vscode-background/actions)
 [![License](https://img.shields.io/github/license/shalldie/vscode-background?style=flat-square)](https://github.com/shalldie/vscode-background)
 
-多区域，`editor`、`sidebar`、`panel`
+Multiple sections, `editor`、`sidebar`、`panel`
 
 <img width="760" src="images/section.png">
 
-全屏
+`fullscreen`
 
 <img width="760" src="images/fullscreen.png">
 
@@ -67,7 +67,7 @@ User defined requirements can be met by changing the configuration(`settings.jso
 
 editor:
 
-```json
+```jsonc
 {
   "background.editor": {
     "useFront": true, // Set the image to front or back of your code
@@ -86,9 +86,11 @@ editor:
 }
 ```
 
+> `style` means [css style](https://developer.mozilla.org/en-US/docs/Learn/CSS/First_steps/What_is_CSS), which allows you to create great-looking background.
+
 fullscreen、sidebar、panel：
 
-```json
+```jsonc
 {
   "background.fullscreen": {
     // Your custom images, support `https` and `file` protocol.

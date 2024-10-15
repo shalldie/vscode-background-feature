@@ -1,4 +1,10 @@
 out
+dist
 node_modules
 .vscode-test/
-.vsix
+*.vsix
+.DS_Store
+.husky
+*.touch
+*.cache
+.idea

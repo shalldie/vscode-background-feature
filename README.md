@@ -1,3 +1,5 @@
+> This repo is for testing! Never to use it!!
+
 <!-- 中英文切换 -->
 <div align="right">
 
@@ -59,47 +61,70 @@ User defined requirements can be met by changing the configuration(`settings.jso
 
 ### Global Config
 
-| Name                 |   Type    | Default | Description                   |
-| :------------------- | :-------: | :-----: | :---------------------------- |
-| `background.enabled` | `Boolean` | `true`  | Enable or disable this plugin |
+| Name                 |   Type    | Default | Description                             |
+| :------------------- | :-------: | :-----: | :-------------------------------------- |
+| `background.enabled` | `Boolean` | `true`  | Whether to enable background extension. |
 
-### Background Config
+### Editor Section Config
 
-editor:
+Edit `background.editor` to config editor section.
 
-```jsonc
+| Name       |    Type    |   Default    | Description                                                |
+| :--------- | :--------: | :----------: | :--------------------------------------------------------- |
+| `useFront` | `boolean`  |    `true`    | Place the image above or below the code.                   |
+| `style`    |  `object`  |     `{}`     | Custom style for images.                                   |
+| `styles`   | `object[]` | `[{},{},{}]` | Each style of editor section image.                        |
+| `images`   | `string[]` |     `[]`     | Your custom images, support `https` and `file` protocol.   |
+| `interval` |  `number`  |     `0`      | Seconds of interval for carousel, default `0` to disabled. |
+| `random`   | `boolean`  |   `false`    | Whether to randomly display images.                        |
+
+> `style` means [css style](https://developer.mozilla.org/en-US/docs/Learn/CSS/First_steps/What_is_CSS), which allows you to create great-looking background.
+
+example:
+
+```json
 {
   "background.editor": {
-    "useFront": true, // Set the image to front or back of your code
-    // Custom style for images.
+    "useFront": true,
     "style": {
       "background-position": "100% 100%",
       "background-size": "auto",
       "opacity": 1
     },
-    "styles": [{}, {}, {}], // Each style of editor section image.
-    // Your custom images, support `https` and `file` protocol.
+    "styles": [{}, {}, {}],
+    // Local images can be dragged into the browser to quickly get the file protocol address from the address bar
     "images": ["https://pathtoimage.png", "file:///path/to/local/file"],
-    "interval": 0, // Seconds of interval for carousel, default `0` to disabled.
-    "random": false // Whether to randomly display images.
+    "interval": 0,
+    "random": false
   }
 }
 ```
 
-> `style` means [css style](https://developer.mozilla.org/en-US/docs/Learn/CSS/First_steps/What_is_CSS), which allows you to create great-looking background.
+### Fullscreen、Sidebar、Panel Section Config
 
-fullscreen、sidebar、panel：
+Edit `background.fullscreen`、`background.sidebar`、`background.panel` to config these sections.
 
-```jsonc
+| 名称       |    类型    |    默认值     | 描述                                                                                             |
+| :--------- | :--------: | :-----------: | :----------------------------------------------------------------------------------------------- |
+| `images`   | `string[]` |     `[]`      | Your custom images, support `https` and `file` protocol.                                         |
+| `opacity`  |  `number`  | `0.91`、`0.2` | Opacity of the image, `0.85 ~ 0.95` recommended if fullscreen，others `0.1 ~ 0.3`.               |
+| `size`     |  `string`  |    `cover`    | Alias to `background-size`, `cover` to self-adaption (recommended)，or `contain`、`200px 200px`. |
+| `position` |  `string`  |   `center`    | Alias to `background-position`, default `center`.                                                |
+| `interval` |  `Number`  |      `0`      | Seconds of interval for carousel, default `0` to disabled.                                       |
+| `random`   | `Boolean`  |    `false`    | Whether to randomly display images.                                                              |
+
+example：
+
+```json
 {
   "background.fullscreen": {
-    // Your custom images, support `https` and `file` protocol.
+    // Local images can be dragged into the browser to quickly get the file protocol address from the address bar
     "images": ["https://pathtoimage.png", "file:///path/to/local/file"],
-    "opacity": 0.91, // Opacity of the image, 0.85 ~ 0.95 recommended.
-    "size": "cover", // Alias to `background-size`, `cover` to self-adaption (recommended)，or `contain`、`200px 200px`.
-    "position": "center", // Alias to `background-position`, default `center`
-    "interval": 0, // Seconds of interval for carousel, default `0` to disabled.
-    "random": false // Whether to randomly display images.
+    "opacity": 0.91,
+    "size": "cover",
+    "position": "center",
+    "interval": 0,
+    "random": false
   },
   // `sidebar` and `panel` have the same config as `fullscreen`
   "background.sidebar": {},

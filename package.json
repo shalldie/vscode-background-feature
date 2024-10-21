@@ -2,7 +2,7 @@
   "name": "background-feature",
   "displayName": "background feature",
   "description": "Please not use this, it's just for testing background's feature! Not for users.",
-  "version": "0.0.6",
+  "version": "0.1.1",
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "vscode:uninstall": "node ./out/uninstall",
@@ -17,7 +17,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/shalldie/vscode-background.git"
+    "url": "https://github.com/shalldie/vscode-background-feature.git"
   },
   "engines": {
     "vscode": "^1.94.0"

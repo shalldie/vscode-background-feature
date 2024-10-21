@@ -3,13 +3,13 @@
 import vscode from 'vscode';
 
 import { Background } from './background';
-import { EXTENSION_ID } from './constants';
+import { EXTENSION_ID } from './utils/constants';
 import { vsHelp } from './utils/vsHelp';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 
-export const statusbar = (() => {
+function getStatusbar() {
     const item = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);
 
     item.command = 'extension.background.showAllCommands';
@@ -19,12 +19,16 @@ export const statusbar = (() => {
     item.show();
 
     return item;
-})();
+}
 
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
     const background = new Background();
-    await background.setup();
+
     context.subscriptions.push(background);
+    const ok = await background.setup();
+    if (ok === false) {
+        return;
+    }
 
     context.subscriptions.push(
         vscode.commands.registerCommand('extension.background.info', function () {
@@ -36,7 +40,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         vscode.commands.registerCommand('extension.background.install', async () => {
             await background.config.update('enabled', true, true);
             await background.applyPatch();
-            vscode.commands.executeCommand('workbench.action.reloadWindow');
+            await vscode.commands.executeCommand('workbench.action.reloadWindow');
         })
     );
 
@@ -44,7 +48,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         vscode.commands.registerCommand('extension.background.disable', async () => {
             await background.config.update('enabled', false, true);
             await background.uninstall();
-            vscode.commands.executeCommand('workbench.action.reloadWindow');
+            await vscode.commands.executeCommand('workbench.action.reloadWindow');
         })
     );
 
@@ -63,6 +67,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         })
     );
 
+    const statusbar = getStatusbar();
     context.subscriptions.push(
         vscode.commands.registerCommand(statusbar.command as string, async () => {
             vscode.commands.executeCommand('workbench.action.quickOpen', '> background: ');

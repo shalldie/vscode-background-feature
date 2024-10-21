@@ -4,12 +4,12 @@ import path from 'path';
 
 import vscode, { Disposable, Uri } from 'vscode';
 
-import { ENCODING, EXTENSION_NAME, TOUCH_JSFILE_PATH, VERSION } from '../constants';
 import { utils } from '../utils';
+import { ENCODING, EXTENSION_NAME, TOUCH_JSFILE_PATH, VERSION } from '../utils/constants';
 import { vscodePath } from '../utils/vscodePath';
 import { vsHelp } from '../utils/vsHelp';
 import { CssFile } from './CssFile';
-import { EJsEditType, JsFile } from './JsFile';
+import { EFilePatchType, JsPatchFile } from './PatchFile';
 import { PatchGenerator, TPatchGeneratorConfig } from './PatchGenerator';
 
 /**
@@ -27,13 +27,13 @@ export class Background implements Disposable {
     // #region fields 字段
 
     /**
-     * css文件操作对象
+     * 老版本css文件操作对象
      *
      * @memberof Background
      */
     public cssFile = new CssFile(vscodePath.cssPath); // 没必要继承，组合就行
 
-    public jsFile = new JsFile(vscodePath.jsPath);
+    public jsFile = new JsPatchFile(vscodePath.jsPath);
 
     /**
      * 当前用户配置
@@ -83,7 +83,7 @@ export class Background implements Disposable {
     public async showWelcome() {
         // 欢迎页
         const docDir = path.join(__dirname, '../../docs');
-        const docName = /^zh/.test(vscode.env.language) ? 'WELCOME.zh-CN.md' : 'WELCOME.md';
+        const docName = /^zh/.test(vscode.env.language) ? 'welcome.zh-CN.md' : 'welcome.md';
 
         // welcome 内容
         let content = await fs.promises.readFile(path.join(docDir, docName), ENCODING);
@@ -131,13 +131,13 @@ export class Background implements Disposable {
      * @memberof Background
      */
     private async onConfigChange() {
-        const hasInstalled = await this.jsFile.hasInstalled();
+        const hasInstalled = await this.hasInstalled();
         const enabled = this.config.enabled;
 
         // 禁用
         if (!enabled) {
             if (hasInstalled) {
-                await this.jsFile.uninstall();
+                await this.uninstall();
                 vsHelp.showInfoRestart('Background has been disabled! Please restart.');
             }
             return;
@@ -163,10 +163,7 @@ export class Background implements Disposable {
         }
 
         const scriptContent = PatchGenerator.create(this.config);
-
-        await utils.lock();
-        await this.jsFile.applyPatch(scriptContent);
-        await utils.unlock();
+        await this.jsFile.applyPatches(scriptContent);
     }
 
     // #endregion
@@ -179,16 +176,23 @@ export class Background implements Disposable {
      * @return {*}  {Promise<void>}
      * @memberof Background
      */
-    public async setup(): Promise<void> {
+    public async setup(): Promise<any> {
         await this.removeLegacyCssPatch(); // 移除旧版本patch
+        await this.jsFile.setup(); // backup
+
+        if (!this.jsFile.hasBackup) {
+            vscode.window.showErrorMessage('Backup files failed to save.');
+            return false;
+        }
+
         await this.checkFirstload(); // 是否初次加载插件
 
-        const editType = await this.jsFile.getEditType(); // css 文件目前状态
+        const patchType = await this.jsFile.getPatchType(); // css 文件目前状态
 
         // 如果「开启」状态，文件不是「latest」，则进行更新
         if (this.config.enabled) {
             // 此时一般为 vscode更新、background更新
-            if ([EJsEditType.IsOld, EJsEditType.NoModified].includes(editType)) {
+            if ([EFilePatchType.Legacy, EFilePatchType.None].includes(patchType)) {
                 await this.applyPatch();
                 vsHelp.showInfoRestart('Background has been changed! Please restart.');
             }
@@ -196,11 +200,15 @@ export class Background implements Disposable {
 
         // 监听文件改变
         this.disposables.push(
-            vscode.workspace.onDidChangeConfiguration(ex => {
-                const hasChanged = ex.affectsConfiguration(EXTENSION_NAME);
+            vscode.workspace.onDidChangeConfiguration(async ex => {
+                const hasChanged = ex.affectsConfiguration('background');
                 if (!hasChanged) {
                     return;
                 }
+
+                // 0~500ms 的延时，对于可能的多实例，错开对于文件的操作
+                // 虽然有锁了，但这样更安心 =。=
+                await utils.sleep(~~(Math.random() * 500));
 
                 this.onConfigChange();
             })
@@ -214,7 +222,7 @@ export class Background implements Disposable {
      * @memberof Background
      */
     public hasInstalled(): Promise<boolean> {
-        return this.jsFile.hasInstalled();
+        return this.jsFile.hasPatched();
     }
 
     /**
@@ -225,7 +233,7 @@ export class Background implements Disposable {
      */
     public async uninstall(): Promise<boolean> {
         await this.removeLegacyCssPatch();
-        return this.jsFile.uninstall();
+        return this.jsFile.restore();
     }
 
     /**

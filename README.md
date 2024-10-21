@@ -1,4 +1,8 @@
-> This repo is for testing! Never to use it!!
+# This repo is for testing! Never to use it!!
+
+# This repo is for testing! Never to use it!!
+
+# This repo is for testing! Never to use it!!
 
 <!-- 中英文切换 -->
 <div align="right">
@@ -11,13 +15,13 @@
 <!-- 封面区域 -->
 <div align="center">
 
-![logo](https://user-images.githubusercontent.com/9987486/40583704-6accf3a4-61c6-11e8-8c00-a636b9c3ec65.png)
+![logo](./images/logo.png)
 
 <h1><b>vscode-background</b></h1>
 
 ### Bring background images to your [Visual Studio Code](https://code.visualstudio.com)
 
-`code area`、`fullscreen`、`carousel`、`custom images/styles`...
+`fullscreen`、`editor`、`sidebar`、`panel`、`carousel`、`custom images/styles`...
 
 [GitHub](https://github.com/shalldie/vscode-background) | [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=shalldie.background)
 
@@ -30,11 +34,11 @@
 
 Multiple sections, `editor`、`sidebar`、`panel`
 
-<img width="760" src="images/section.png">
+<img width="760" src="./images/section.png">
 
 `fullscreen`
 
-<img width="760" src="images/fullscreen.png">
+<img width="760" src="./images/fullscreen.png">
 
 </div>
 
@@ -57,7 +61,7 @@ User defined requirements can be met by changing the configuration(`settings.jso
 
 ## Config
 
-<img width="760" src="images/containers.png">
+<img width="760" src="./images/containers.png">
 
 ### Global Config
 
@@ -104,14 +108,14 @@ example:
 
 Edit `background.fullscreen`、`background.sidebar`、`background.panel` to config these sections.
 
-| 名称       |    类型    |    默认值     | 描述                                                                                             |
+| Name       |    Type    |    Default    | Description                                                                                      |
 | :--------- | :--------: | :-----------: | :----------------------------------------------------------------------------------------------- |
 | `images`   | `string[]` |     `[]`      | Your custom images, support `https` and `file` protocol.                                         |
 | `opacity`  |  `number`  | `0.91`、`0.2` | Opacity of the image, `0.85 ~ 0.95` recommended if fullscreen，others `0.1 ~ 0.3`.               |
 | `size`     |  `string`  |    `cover`    | Alias to `background-size`, `cover` to self-adaption (recommended)，or `contain`、`200px 200px`. |
 | `position` |  `string`  |   `center`    | Alias to `background-position`, default `center`.                                                |
-| `interval` |  `Number`  |      `0`      | Seconds of interval for carousel, default `0` to disabled.                                       |
-| `random`   | `Boolean`  |    `false`    | Whether to randomly display images.                                                              |
+| `interval` |  `number`  |      `0`      | Seconds of interval for carousel, default `0` to disabled.                                       |
+| `random`   | `boolean`  |    `false`    | Whether to randomly display images.                                                              |
 
 example：
 
@@ -136,37 +140,17 @@ example：
 
 Click the 「Background」 button on the right-bottom of statusbar, all commands of `background` will appear:
 
-<img width="660" src="images/commands.png">
+<img width="660" src="./images/commands.png">
 
-## Warns
+## Common Issues
 
 > **This extension works by editting the vscode's js file.**
->
-> So, a warning appears while the first time to install or vscode update. U can click the [never show again] to avoid it.
 
-<img width="560" src="https://user-images.githubusercontent.com/9987486/40583926-b1fb5398-61ca-11e8-8271-4ac650d158d3.png">
-
-This is the reason:
-
-<img width="560" src="https://user-images.githubusercontent.com/9987486/40583775-91d4c8d6-61c7-11e8-9048-8c5538a32399.png">
+Please refer to the [Common Issues](docs/common-issues.md) if you met some problems.
 
 ## Uninstall
 
-    three ways
-
-    1. (recommended)
-
-    Click the 「Background」 button on the right-bottom of statusbar, choose `Uninstall the extension`, automatically complete uninstall.
-
-    2.
-
-    Set the config  {"background.enabled": false}  in settings.json, then uninstall the plugin.
-
-    3. An unfriendly way:
-
-    If you uninstall this plugin directly, don't worry.
-    Exit vscode completely, then open, then reload. Now it's clean :D
-    (I know it's strange... Because of the limit of vscode)
+Please refer to [Common Issues#how-to-uninstall](docs/common-issues.md#how-to-uninstall).
 
 ## Contributors 🙏
 
@@ -182,13 +166,17 @@ This is the reason:
 [<img alt="rogeraabbccdd" src="https://avatars.githubusercontent.com/u/15815422?v=4" width="80">](https://github.com/rogeraabbccdd)
 [<img alt="rogeraabbccdd" src="https://avatars.githubusercontent.com/u/86603229?v=4" width="80">](https://github.com/SatoMasahiro2005)
 
-## CHANGELOG
+## Contributing Guide
 
-You can checkout all our changes in our [change log](https://github.com/shalldie/vscode-background/blob/master/CHANGELOG.md).
+Refer to [Contributing Guide](docs/contributing.md).
 
-## High-frequency problems navigation
+## Change Log
 
-Visit [here](https://github.com/shalldie/vscode-background/issues/352) to see the high-frequency problems navigation.
+You can checkout all our changes in our [CHANGELOG](https://github.com/shalldie/vscode-background/blob/master/CHANGELOG.md).
+
+## Migration from v1
+
+The configuration of v1 is outdated and currently maintains a certain level of compatibility. Please refer to [migration-from-v1.md](docs/migration-from-v1.md) for migration.
 
 ## LICENSE
 

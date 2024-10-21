@@ -1,8 +1,8 @@
 {
   "name": "background-feature",
   "displayName": "background feature",
-  "description": "Please not use this,it's just for testing background's feature! Not for users.",
-  "version": "0.0.2",
+  "description": "Please not use this, it's just for testing background's feature! Not for users.",
+  "version": "0.0.6",
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "vscode:uninstall": "node ./out/uninstall",
@@ -69,7 +69,6 @@
         "background.useFront": {
           "type": "boolean",
           "default": true,
-          "markdownDescription": "%extension.background.useFront.description%",
           "markdownDeprecationMessage": "%extension.background.common.deprecation%"
         },
         "background.style": {
@@ -79,7 +78,6 @@
             "background-size": "auto",
             "opacity": 1
           },
-          "markdownDescription": "%extension.background.style.description%",
           "markdownDeprecationMessage": "%extension.background.common.deprecation%"
         },
         "background.styles": {
@@ -89,7 +87,6 @@
             {},
             {}
           ],
-          "markdownDescription": "%extension.background.styles.description%",
           "markdownDeprecationMessage": "%extension.background.common.deprecation%"
         },
         "background.customImages": {
@@ -100,13 +97,11 @@
             "pattern": "^(https://|file://)",
             "patternErrorMessage": "%extension.background.urlProtocol.error%"
           },
-          "markdownDescription": "%extension.background.customImages.description%",
           "markdownDeprecationMessage": "%extension.background.common.deprecation%"
         },
         "background.interval": {
           "type": "number",
           "default": 0,
-          "markdownDescription": "%extension.background.interval.description%",
           "markdownDeprecationMessage": "%extension.background.common.deprecation%"
         },
         "background.editor": {
@@ -303,7 +298,7 @@
     "@types/vscode": "^1.94.0",
     "@typescript-eslint/eslint-plugin": "^8.7.0",
     "@typescript-eslint/parser": "^8.7.0",
-    "@vscode/vsce": "^3.1.1",
+    "@vscode/vsce": "^3.2.0",
     "eslint": "^9.11.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
